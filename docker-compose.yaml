@@ -16,13 +16,15 @@ services:
 
   sberbank:
     restart: always
-    build: ./
+    build:
+      context: ./
+      dockerfile: sberServer/Dockerfile
     working_dir: /sberServer
     volumes:
       - ./sberServer:/sberServer
       - ~/.m2:/root/.m2
     ports:
-      - 8080:8080
+      - 9090:9090
     command: mvn clean spring-boot:run
     depends_on:
       - sber-mysql
