@@ -17,8 +17,8 @@ public class MainController {
         this.dictionaryRepo = dictionaryRepo;
     }
 
-    @GetMapping(value = "/dictionary/{docs}")
-    public Dict getDictByName(HttpServletRequest request, @PathVariable String docs) throws Exception {
-        return dictionaryRepo.findByName(docs);
+    @GetMapping(value = "/dictionary/{title}")
+    public Dict getDictByName(HttpServletRequest request, @PathVariable String title) throws Exception {
+        return dictionaryRepo.findByName(title);
     }
 }
