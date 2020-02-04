@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FindAttribute extends DefaultHandler {
-    private List<String> result = null;
 
-    public List<String> getAttributes(){
+    public FindAttribute() { }
+
+    private List<String> result;
+
+    public List<String> getAttributes() {
         return result;
     }
 

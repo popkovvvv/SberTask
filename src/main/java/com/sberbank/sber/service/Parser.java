@@ -1,12 +1,9 @@
 package com.sberbank.sber.service;
 
-import com.sberbank.sber.SberApplication;
 import com.sberbank.sber.model.Dict;
 import com.sberbank.sber.repo.DictionaryRepo;
 import com.sberbank.sber.service.utils.DocumentTypes;
 import com.sberbank.sber.service.utils.FindAttribute;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -23,8 +20,11 @@ import java.io.IOException;
 @Component
 public class Parser extends DefaultHandler {
 
-    @Autowired
-    DictionaryRepo dictionaryRepo;
+    private DictionaryRepo dictionaryRepo;
+
+    public Parser(@Autowired DictionaryRepo dictionaryRepo) {
+        this.dictionaryRepo = dictionaryRepo;
+    }
 
     @PostConstruct
     private void init() throws IOException{
@@ -42,10 +42,8 @@ public class Parser extends DefaultHandler {
             xmlReader.setContentHandler(finder);
             xmlReader.parse(source.toString());
             Dict dict = new Dict("docs", finder.getDocuments());
-            boolean exist = dictionaryRepo.exists(dict);
-            if (!exist){
-                dictionaryRepo.save(dict);
-            }
+            dictionaryRepo.save(dict);
+
         } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -60,12 +58,11 @@ public class Parser extends DefaultHandler {
             xmlReader.setContentHandler(finder);
             xmlReader.parse(source.toString());
             Dict dict = new Dict("attributes", finder.getAttributes());
-            boolean exist = dictionaryRepo.exists(dict);
-            if (!exist){
-                dictionaryRepo.save(dict);
-            }        } catch (ParserConfigurationException | SAXException | IOException e) {
+            dictionaryRepo.save(dict);
+        } catch (ParserConfigurationException | SAXException | IOException e) {
             throw new RuntimeException(e);
         }
     }
+
 
 }

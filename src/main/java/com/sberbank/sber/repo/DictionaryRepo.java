@@ -5,6 +5,4 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 public interface DictionaryRepo extends PagingAndSortingRepository<Dict, Long> {
     Dict findByName(String name);
-
-    boolean exists(Dict dict);
 }
