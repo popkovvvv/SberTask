@@ -26,8 +26,6 @@ public class Parser extends DefaultHandler {
     @Autowired
     DictionaryRepo dictionaryRepo;
 
-    private static final Logger log = LoggerFactory.getLogger(SberApplication.class);
-
     @PostConstruct
     private void init() throws IOException{
         File file = ResourceUtils.getFile("classpath:sber.xml");
